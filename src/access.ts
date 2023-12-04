@@ -1,9 +1,12 @@
 /**
  * @see https://umijs.org/zh-CN/plugins/plugin-access
  * */
-export default function access(initialState: { currentUser?: API.CurrentUser } | undefined) {
-  const { currentUser } = initialState ?? {};
+export default function access(initialState: { identity?: string } | undefined) {
+  const { identity } = initialState ?? {};
+  console.log(initialState);
   return {
-    canAdmin: currentUser && currentUser.access === 'admin',
+    canStudent: identity === '0',
+    canTeacher: identity === '1',
+    canAdmin: identity === '2',
   };
 }

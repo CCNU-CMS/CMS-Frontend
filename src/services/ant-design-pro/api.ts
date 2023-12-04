@@ -2,27 +2,12 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 获取当前的用户 GET /api/currentUser */
-export async function currentUser(options?: { [key: string]: any }) {
-  return request<{
-    data: API.CurrentUser;
-  }>('/api/currentUser', {
-    method: 'GET',
-    ...(options || {}),
-  });
-}
+// 写在前面
+// 接口定义采用小驼峰式命名法
 
-/** 退出登录接口 POST /api/login/outLogin */
-export async function outLogin(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/login/outLogin', {
-    method: 'POST',
-    ...(options || {}),
-  });
-}
-
-/** 登录接口 POST /api/login/account */
+/** 登录接口 POST /api/v1/user/login */
 export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
-  return request<API.LoginResult>('/api/login/account', {
+  return request<API.LoginResult>('/api/v1/user/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -31,55 +16,59 @@ export async function login(body: API.LoginParams, options?: { [key: string]: an
     ...(options || {}),
   });
 }
-
-/** 此处后端没有提供注释 GET /api/notices */
-export async function getNotices(options?: { [key: string]: any }) {
-  return request<API.NoticeIconList>('/api/notices', {
+/** 获取用户个人信息接口 /api/v1/user/info */
+export async function getUserInfo(token: string) {
+  return request<API.GetUserInfoResult>('api/v1/user/info', {
     method: 'GET',
-    ...(options || {}),
-  });
-}
-
-/** 获取规则列表 GET /api/rule */
-export async function rule(
-  params: {
-    // query
-    /** 当前的页码 */
-    current?: number;
-    /** 页面的容量 */
-    pageSize?: number;
-  },
-  options?: { [key: string]: any },
-) {
-  return request<API.RuleList>('/api/rule', {
-    method: 'GET',
-    params: {
-      ...params,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
     },
-    ...(options || {}),
   });
 }
 
-/** 新建规则 PUT /api/rule */
-export async function updateRule(options?: { [key: string]: any }) {
-  return request<API.RuleListItem>('/api/rule', {
-    method: 'PUT',
-    ...(options || {}),
-  });
-}
+// 以下是框架自带接口，可以忽略
 
-/** 新建规则 POST /api/rule */
-export async function addRule(options?: { [key: string]: any }) {
-  return request<API.RuleListItem>('/api/rule', {
-    method: 'POST',
-    ...(options || {}),
-  });
-}
+// /** 获取规则列表 GET /api/rule */
+// export async function rule(
+//   params: {
+//     // query
+//     /** 当前的页码 */
+//     current?: number;
+//     /** 页面的容量 */
+//     pageSize?: number;
+//   },
+//   options?: { [key: string]: any },
+// ) {
+//   return request<API.RuleList>('/api/rule', {
+//     method: 'GET',
+//     params: {
+//       ...params,
+//     },
+//     ...(options || {}),
+//   });
+// }
 
-/** 删除规则 DELETE /api/rule */
-export async function removeRule(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/rule', {
-    method: 'DELETE',
-    ...(options || {}),
-  });
-}
+// /** 新建规则 PUT /api/rule */
+// export async function updateRule(options?: { [key: string]: any }) {
+//   return request<API.RuleListItem>('/api/rule', {
+//     method: 'PUT',
+//     ...(options || {}),
+//   });
+// }
+
+// /** 新建规则 POST /api/rule */
+// export async function addRule(options?: { [key: string]: any }) {
+//   return request<API.RuleListItem>('/api/rule', {
+//     method: 'POST',
+//     ...(options || {}),
+//   });
+// }
+
+// /** 删除规则 DELETE /api/rule */
+// export async function removeRule(options?: { [key: string]: any }) {
+//   return request<Record<string, any>>('/api/rule', {
+//     method: 'DELETE',
+//     ...(options || {}),
+//   });
+// }

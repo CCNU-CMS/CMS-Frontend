@@ -17,17 +17,52 @@ export default [
     routes: [{ name: '登录', path: '/user/login', component: './User/Login' }],
   },
   { path: '/welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
+
   {
-    name: '管理页',
-    path: '/admin',
-    icon: 'crown',
-    access: 'canAdmin',
-    routes: [
-      { path: '/admin', redirect: '/admin/sub-page' },
-      { name: '子页面', path: '/admin/sub-page', component: './Admin' },
-    ],
+    name: '我的课程',
+    icon: 'ScheduleOutlined',
+    access: 'canStudent',
+    path: '/student/course',
+    component: './MyCourse',
   },
-  { name: '表格', icon: 'table', path: '/list', component: './TableList' },
+  {
+    name: '加入课程',
+    icon: 'TableOutlined',
+    access: 'canStudent',
+    path: '/student/course/join',
+    component: './CourseList',
+  },
+
+  {
+    name: '授课列表',
+    icon: 'ProjectOutlined',
+    access: 'canTeacher',
+    path: '/teacher/course',
+    component: './TeachCourse',
+  },
+
+  {
+    name: '用户管理',
+    icon: 'TeamOutlined',
+    access: 'canAdmin',
+    path: '/admin/user/manage',
+    component: './UserManagement',
+  },
+  {
+    name: '课程管理',
+    icon: 'ReadOutlined',
+    access: 'canAdmin',
+    path: '/admin/course/manage',
+    component: './CourseManagement',
+  },
+
+  {
+    name: '个人信息',
+    icon: 'UserOutlined',
+    path: '/account/settings',
+    component: './AccountSettings',
+  },
+  { name: '论坛交流', icon: 'CommentOutlined', path: '/forum', component: './Forum' },
   { path: '/', redirect: '/welcome' },
   { path: '*', layout: false, component: './404' },
 ];
