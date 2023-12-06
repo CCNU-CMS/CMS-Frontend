@@ -141,6 +141,32 @@ declare namespace API {
     timestamp: number;
   };
 
+  /** 更新课程信息接口body参数类型 */
+  type UpdateCourseParams = {
+    name: string;
+    time: string;
+    classroom: string;
+    academy: string;
+    dept: string;
+    description: string;
+  };
+
+  /** 更新课程接口返回值类型 */
+  type UpdateCourseResult = {
+    status: number;
+    message: string;
+    data: string;
+    timestamp: number;
+  };
+
+  /** 删除课程接口返回值类型 */
+  type DeleteCourseResult = {
+    status: number;
+    message: string;
+    data: string;
+    timestamp: number;
+  };
+
   // type PageParams = {
   //   current?: number;
   //   pageSize?: number;

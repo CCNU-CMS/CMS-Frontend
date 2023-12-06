@@ -173,7 +173,6 @@ const UserManagement: React.FC = () => {
       okType: 'danger',
       cancelText: 'No',
       onOk() {
-        const token = localStorage.getItem('token');
         if (token) {
           deleteUser({ account: record.account }, token).then((res) => {
             if (res.status === 100) {

@@ -121,6 +121,28 @@ export async function addCourse(body: API.AddCourseParams, token: string) {
   });
 }
 
+export async function updateCourse(courseId: number, body: API.UpdateCourseParams, token: string) {
+  return request<API.UpdateCourseResult>(`/api/v1/course/update/${courseId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: body,
+  });
+}
+
+/** 删除课程接口 /api/v1/course/delete/{courseId} */
+export async function deleteCourse(courseId: number, token: string) {
+  return request<API.DeleteCourseResult>(`/api/v1/course/delete/${courseId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  });
+}
+
 // 以下是框架自带接口，可以忽略
 
 // /** 获取规则列表 GET /api/rule */
