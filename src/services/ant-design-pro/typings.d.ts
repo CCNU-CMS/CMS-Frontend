@@ -12,19 +12,19 @@ declare namespace API {
 
   /** 登录接口返回值类型*/
   type LoginResult = {
-    status?: number;
-    message?: string;
+    status: number;
+    message: string;
     data: {
       identity: number;
       token: string;
     };
-    timestamp?: number;
+    timestamp: number;
   };
 
   /** 获取用户信息接口返回值类型*/
   type GetUserInfoResult = {
-    status?: number;
-    message?: string;
+    status: number;
+    message: string;
     data: {
       id: number;
       name: string;
@@ -33,7 +33,112 @@ declare namespace API {
       dept: string;
       identity: number;
     };
-    timestamp?: number;
+    timestamp: number;
+  };
+
+  /** 用户所有信息类型 */
+  type DetailUserInfo = {
+    id: number;
+    name: string;
+    account: string;
+    password: string;
+    sex: string;
+    dept: string;
+    identity: number;
+  };
+
+  /** 获取所有类型用户信息接口的返回值类型*/
+  type GetAllUserInfoResult = {
+    status: number;
+    message: string;
+    data: {
+      size: number;
+      users: {
+        content: DetailUserInfo[];
+      };
+    };
+    timestamp: number;
+  };
+
+  /** 获取一种类型所有用户信息接口的返回值类型*/
+  type GetOneTypeUserInfoResult = {
+    status: number;
+    message: string;
+    data: {
+      size: number;
+      users: DetailUserInfo[];
+    };
+    timestamp: number;
+  };
+
+  /** 新增用户接口body参数类型 */
+  type AddUserParams = {
+    name: string;
+    account: string;
+    password: string;
+    identity: number;
+  };
+
+  /** 新增用户接口返回值类型 */
+  type AddUserResult = {
+    status: number;
+    message: string;
+    data: {
+      'user-id': number;
+      token: string;
+    };
+    timestamp: number;
+  };
+
+  /** 删除用户接口返回值类型 */
+  type DeleteUserResult = {
+    status: number;
+    message: string;
+    data?: string;
+    timestamp: number;
+  };
+
+  /** 课程信息类型 */
+  type CourseInfo = {
+    id: number;
+    name: string;
+    time: string;
+    classroom: string;
+    academy: string;
+    dept: string;
+    description: string;
+    teacher: string;
+  };
+  /** 获取全部课程信息接口的返回值类型 */
+  type GetAllCourseInfoResult = {
+    status: number;
+    message: string;
+    data: {
+      courses: {
+        content: CourseInfo[];
+      };
+      size: number;
+    };
+    timestamp: number;
+  };
+
+  /** 添加课程接口body参数类型 */
+  type AddCourseParams = {
+    name: string;
+    time: string;
+    classroom: string;
+    academy: string;
+    dept: string;
+    description: string;
+    t_account: string;
+  };
+
+  /** 添加课程接口返回值类型 */
+  type AddCourseResult = {
+    status: number;
+    message: string;
+    data: string;
+    timestamp: number;
   };
 
   // type PageParams = {

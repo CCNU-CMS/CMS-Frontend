@@ -27,6 +27,100 @@ export async function getUserInfo(token: string) {
   });
 }
 
+/** 获取所有类型用户信息接口 /api/v1/user/all */
+export async function getAllUserInfo(
+  params: {
+    /**当前页面的页码 */
+    page: number;
+    /**用户类别 */
+    identity: number;
+  },
+  token: string,
+) {
+  return request<API.GetAllUserInfoResult>('/api/v1/user/all', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    params: {
+      ...params,
+    },
+  });
+}
+
+/** 获取一种类型所有用户信息接口 /api/v1/user/all */
+export async function getOneTyUserInfo(
+  params: {
+    /**当前页面的页码 */
+    page: number;
+    /**用户类别 */
+    identity: number;
+  },
+  token: string,
+) {
+  return request<API.GetOneTypeUserInfoResult>('/api/v1/user/all', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    params: {
+      ...params,
+    },
+  });
+}
+
+/** 新增用户接口 /api/v1/user/ */
+export async function addUser(body: API.AddUserParams, token: string) {
+  return request<API.AddUserResult>('/api/v1/user/admin/add', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: body,
+  });
+}
+
+/** 删除用户接口 /api/v1/user/admin */
+export async function deleteUser(body: { account: string }, token: string) {
+  return request<API.DeleteUserResult>('/api/v1/user/admin', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: token,
+    },
+    data: body,
+  });
+}
+
+/** 获取全部课程信息接口 /api/v1/course/all/info */
+export async function getAllCourseInfo(params: { page: number }, token: string) {
+  return request<API.GetAllCourseInfoResult>('/api/v1/course/all/info', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: token,
+    },
+    params: {
+      ...params,
+    },
+  });
+}
+
+/** 新增课程接口 /api/v1/course/new */
+export async function addCourse(body: API.AddCourseParams, token: string) {
+  return request<API.AddCourseResult>('/api/v1/course/new', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: body,
+  });
+}
+
 // 以下是框架自带接口，可以忽略
 
 // /** 获取规则列表 GET /api/rule */
