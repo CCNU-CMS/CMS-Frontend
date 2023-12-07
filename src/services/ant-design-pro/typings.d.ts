@@ -44,6 +44,30 @@ declare namespace API {
     timestamp: number;
   };
 
+  /** 课程信息类型 */
+  type CourseInfo = {
+    id: number;
+    name: string;
+    time: string;
+    classroom: string;
+    academy: string;
+    dept: string;
+    description: string;
+    teacher: string;
+  };
+
+  /** 获取已选的全部课程信息接口的返回值类型 */
+  type GetAllChooseCourseInfoResult = {
+    status: number;
+    message: string;
+    data: {
+      courses: {
+        content: CourseInfo[];
+      };
+      size: number;
+    };
+    timestamp: number;
+  };
   // type PageParams = {
   //   current?: number;
   //   pageSize?: number;

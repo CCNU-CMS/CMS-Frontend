@@ -37,6 +37,20 @@ export async function dropCourse(courseId: number, token: string) {
     },
   });
 }
+
+/** 获取已选择的全部课程信息接口 /api/v1/course/all/info */
+export async function getAllChooseCourseInfo(params: { page: number }, token: string) {
+  return request<API.GetAllChooseCourseInfoResult>('/api/v1/course/all/choose', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: token,
+    },
+    params: {
+      ...params,
+    },
+  });
+}
 // 以下是框架自带接口，可以忽略
 
 // /** 获取规则列表 GET /api/rule */
