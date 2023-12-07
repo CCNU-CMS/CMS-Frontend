@@ -54,7 +54,7 @@ export async function UpdateUserPassword(body: API.UpdateUserPasswordParams, tok
 
 /** 选课接口 /api/v1//course/choose/{courseId} */
 export async function chooseCourse(courseId: number, token: string) {
-  return request<API.ChooseCourseResult>('/api/v1//course/choose/${courseId}', {
+  return request<API.ChooseCourseResult>(`/api/v1//course/choose/${courseId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
