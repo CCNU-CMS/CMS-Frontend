@@ -36,6 +36,36 @@ declare namespace API {
     timestamp?: number;
   };
 
+  /**修改用户信息接口返回值类型 */
+  type UpdateUserInfoResult = {
+    status: number;
+    message: string;
+    data: string;
+    timestamp: number;
+  };
+
+  /** 修改用户信息接口body参数类型 */
+  type UpdateUserParams = {
+    name: string;
+    account: string;
+    sex: string;
+    dept: string;
+  };
+
+  /**修改用户密码接口返回值类型 */
+  type UpdateUserPasswordResult = {
+    status: number;
+    message: string;
+    data: string;
+    timestamp: number;
+  };
+
+  /** 修改用户密码接口body参数类型 */
+  type UpdateUserPasswordParams = {
+    old_password: string;
+    new_password: string;
+  };
+
   /** 退课接口返回值类型 */
   type DropCourseResult = {
     status: number;
@@ -61,10 +91,8 @@ declare namespace API {
     status: number;
     message: string;
     data: {
-      courses: {
-        content: CourseInfo[];
-        size: number;
-      };
+      courses: CourseInfo[];
+      size: number;
     };
     timestamp: number;
   };
@@ -73,14 +101,13 @@ declare namespace API {
     status: number;
     message: string;
     data: {
-      courses: {
-        content: CourseInfo[];
-        size: number;
-      };
+      courses: CourseInfo[];
+      size: number;
     };
     timestamp: number;
-  }; /** 添加课程接口返回值类型 */
+  };
 
+  /** 添加课程接口返回值类型 */
   type ChooseCourseResult = {
     status: number;
     message: string;
