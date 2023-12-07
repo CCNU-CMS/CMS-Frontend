@@ -19,7 +19,7 @@ export async function login(body: API.LoginParams, options?: { [key: string]: an
 
 /** 获取用户个人信息接口 /api/v1/user/info */
 export async function getUserInfo(token: string) {
-  return request<API.GetUserInfoResult>('api/v1/user/info', {
+  return request<API.GetUserInfoResult>('/api/v1/user/info', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ export async function getUserInfo(token: string) {
 
 /**修改用户个人信息接口 /api/v1/user/info*/
 export async function UpdateUserInfo(body: API.UpdateUserParams, token: string) {
-  return request<API.UpdateUserInfoResult>('api/v1/user/info', {
+  return request<API.UpdateUserInfoResult>('/api/v1/user/info', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export async function UpdateUserInfo(body: API.UpdateUserParams, token: string) 
 
 /**修改用户密码接口 /api/v1/user/password*/
 export async function UpdateUserPassword(body: API.UpdateUserPasswordParams, token: string) {
-  return request<API.UpdateUserPasswordResult>('api/v1/user/password', {
+  return request<API.UpdateUserPasswordResult>('/api/v1/user/password', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
