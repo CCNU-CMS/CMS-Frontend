@@ -27,6 +27,17 @@ export async function getUserInfo(token: string) {
   });
 }
 
+/** 选课接口 /api/v1//course/choose/{courseId} */
+export async function chooseCourse(courseId: number, token: string) {
+  return request<API.ChooseCourseResult>('/api/v1//course/choose/${courseId}', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  });
+}
+
 /** 退课接口 /api/v1/course/delete/{courseId} */
 export async function dropCourse(courseId: number, token: string) {
   return request<API.DropCourseResult>(`/api/v1/course/drop/${courseId}`, {
@@ -41,6 +52,20 @@ export async function dropCourse(courseId: number, token: string) {
 /** 获取已选择的全部课程信息接口 /api/v1/course/all/info */
 export async function getAllChooseCourseInfo(params: { page: number }, token: string) {
   return request<API.GetAllChooseCourseInfoResult>('/api/v1/course/all/choose', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: token,
+    },
+    params: {
+      ...params,
+    },
+  });
+}
+
+/** 获取全部课程信息接口 /api/v1/course/all/info */
+export async function getAllCourseInfo(params: { page: number }, token: string) {
+  return request<API.GetAllCourseInfoResult>('/api/v1/course/all/info', {
     method: 'GET',
     headers: {
       'Content-Type': 'multipart/form-data',

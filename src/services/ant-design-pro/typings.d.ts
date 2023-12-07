@@ -67,6 +67,25 @@ declare namespace API {
       size: number;
     };
     timestamp: number;
+  }; /** 获取全部课程信息接口的返回值类型 */
+
+  type GetAllCourseInfoResult = {
+    status: number;
+    message: string;
+    data: {
+      courses: {
+        content: CourseInfo[];
+      };
+      size: number;
+    };
+    timestamp: number;
+  }; /** 添加课程接口返回值类型 */
+
+  type ChooseCourseResult = {
+    status: number;
+    message: string;
+    data: string;
+    timestamp: number;
   };
   // type PageParams = {
   //   current?: number;
