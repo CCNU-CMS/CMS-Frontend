@@ -63,20 +63,20 @@ declare namespace API {
     data: {
       courses: {
         content: CourseInfo[];
+        size: number;
       };
-      size: number;
     };
     timestamp: number;
-  }; /** 获取全部课程信息接口的返回值类型 */
-
+  };
+  /** 获取全部课程信息接口的返回值类型 */
   type GetAllCourseInfoResult = {
     status: number;
     message: string;
     data: {
       courses: {
         content: CourseInfo[];
+        size: number;
       };
-      size: number;
     };
     timestamp: number;
   }; /** 添加课程接口返回值类型 */

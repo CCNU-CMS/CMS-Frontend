@@ -54,7 +54,7 @@ export async function getAllChooseCourseInfo(params: { page: number }, token: st
   return request<API.GetAllChooseCourseInfoResult>('/api/v1/course/all/choose', {
     method: 'GET',
     headers: {
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'application/json',
       Authorization: token,
     },
     params: {
@@ -68,7 +68,7 @@ export async function getAllCourseInfo(params: { page: number }, token: string) 
   return request<API.GetAllCourseInfoResult>('/api/v1/course/all/info', {
     method: 'GET',
     headers: {
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'application.json',
       Authorization: token,
     },
     params: {
