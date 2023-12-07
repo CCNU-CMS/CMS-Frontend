@@ -36,6 +36,14 @@ declare namespace API {
     timestamp?: number;
   };
 
+  /** 退课接口返回值类型 */
+  type DropCourseResult = {
+    status: number;
+    message: string;
+    data: string;
+    timestamp: number;
+  };
+
   // type PageParams = {
   //   current?: number;
   //   pageSize?: number;

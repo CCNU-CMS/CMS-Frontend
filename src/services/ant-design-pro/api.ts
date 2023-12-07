@@ -27,6 +27,16 @@ export async function getUserInfo(token: string) {
   });
 }
 
+/** 退课接口 /api/v1/course/delete/{courseId} */
+export async function dropCourse(courseId: number, token: string) {
+  return request<API.DropCourseResult>(`/api/v1/course/drop/${courseId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  });
+}
 // 以下是框架自带接口，可以忽略
 
 // /** 获取规则列表 GET /api/rule */
