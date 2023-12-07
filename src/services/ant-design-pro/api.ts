@@ -100,7 +100,7 @@ export async function getAllCourseInfo(params: { page: number }, token: string) 
   return request<API.GetAllCourseInfoResult>('/api/v1/course/all/info', {
     method: 'GET',
     headers: {
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'application/json',
       Authorization: token,
     },
     params: {
@@ -121,6 +121,7 @@ export async function addCourse(body: API.AddCourseParams, token: string) {
   });
 }
 
+/** 更改课程信息接口 /api/v1/course/update/{courseId} */
 export async function updateCourse(courseId: number, body: API.UpdateCourseParams, token: string) {
   return request<API.UpdateCourseResult>(`/api/v1/course/update/${courseId}`, {
     method: 'PUT',
@@ -136,6 +137,17 @@ export async function updateCourse(courseId: number, body: API.UpdateCourseParam
 export async function deleteCourse(courseId: number, token: string) {
   return request<API.DeleteCourseResult>(`/api/v1/course/delete/${courseId}`, {
     method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  });
+}
+
+/** 获取全部贴子信息接口 /api/v1/post/getAllPosts/{page} */
+export async function getAllPostInfo(page: number, token: string) {
+  return request<API.GetAllPostResult>(`/api/v1/post/getAllPosts/${page}`, {
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       Authorization: token,

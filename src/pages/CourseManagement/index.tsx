@@ -307,7 +307,7 @@ const CourseManagement: React.FC = () => {
         .then((res) => {
           if (res.status === 100) {
             // console.log(res.data.courses.content);
-            setAllCourseInfo(res.data.courses.content);
+            setAllCourseInfo(res.data.courses);
             setTotal(res.data.size);
           } else {
             message.error('获取课程列表失败，请重试！');

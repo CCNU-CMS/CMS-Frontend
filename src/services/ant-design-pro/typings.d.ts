@@ -114,9 +114,7 @@ declare namespace API {
     status: number;
     message: string;
     data: {
-      courses: {
-        content: CourseInfo[];
-      };
+      courses: CourseInfo[];
       size: number;
     };
     timestamp: number;
@@ -164,6 +162,35 @@ declare namespace API {
     status: number;
     message: string;
     data: string;
+    timestamp: number;
+  };
+
+  /** 贴子标签类型 */
+  type Tag = {
+    id: number;
+    name: string;
+    type: number;
+  };
+
+  /** 贴子信息类型 */
+  type PostInfo = {
+    id: number;
+    content: string;
+    createdAt: string;
+    user: DetailUserInfo;
+    tags: Tag[];
+  };
+
+  /** 获取全部贴子接口返回值类型 */
+  type GetAllPostResult = {
+    status: number;
+    message: string;
+    data: {
+      size: number;
+      posts: {
+        content: PostInfo[];
+      };
+    };
     timestamp: number;
   };
 
