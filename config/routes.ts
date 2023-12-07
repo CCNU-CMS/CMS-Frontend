@@ -22,7 +22,7 @@ export default [
     name: '我的课程',
     icon: 'ScheduleOutlined',
     access: 'canStudent',
-    path: '/student/course',
+    path: '/student/course/choose',
     component: './MyCourse',
   },
   {

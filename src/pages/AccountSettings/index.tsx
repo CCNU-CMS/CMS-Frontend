@@ -1,4 +1,7 @@
+import React from 'react';
+
 const AccountSettings: React.FC = () => {
-  return <div>个人信息页</div>;
+  return <div>课程管理</div>;
 };
+
 export default AccountSettings;
