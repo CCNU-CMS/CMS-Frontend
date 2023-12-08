@@ -1,42 +1,54 @@
 import { getAllPostInfo } from '@/services/ant-design-pro/api';
 import { Divider, Tag } from 'antd';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './index.less';
 
 const token = localStorage.getItem('token');
 
-const Post: React.FC = () => {
+type PostProp = {
+  post: API.PostInfo;
+};
+
+const Post: React.FC<PostProp> = (props: PostProp) => {
+  const { user, content, createdAt, tags } = props.post;
+
   return (
     <div className="post-box">
       <div className="user-box">
-        <div className="user-box-name">无纸化</div>
-        <div className="user-box-account">2021214115</div>
+        <div className="user-box-name">{user.name}</div>
+        <div className="user-box-account">{user.account}</div>
       </div>
       <div className="content-box">
-        <p className="post-content">
-          这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子这是一条有意思的贴子
-        </p>
+        <p className="post-content">{content}</p>
       </div>
       <div className="description-box">
         <div>
-          <Tag bordered={false} color="processing">
-            计算机科学与技术
-          </Tag>
-          <Tag bordered={false} color="success">
-            数据库课程
-          </Tag>
+          {tags.map((tag) => {
+            return (
+              <Tag
+                key={tag.id}
+                bordered={false}
+                color={tag.type === 1 ? 'blue-inverse' : 'green-inverse'}
+              >
+                {tag.name}
+              </Tag>
+            );
+          })}
         </div>
         <Divider type="vertical" />
-        <div className="post-time">2023-12-01</div>
+        <div className="post-time">{createdAt.split('T')[0]}</div>
       </div>
     </div>
   );
 };
 
 const Forum: React.FC = () => {
+  const [posts, setPosts] = useState<API.PostInfo[]>([]);
+
   useEffect(() => {
     if (token) {
       getAllPostInfo(1, token).then((res) => {
+        setPosts(res.data.posts.content);
         console.log(res.data.posts.content);
       });
     }
@@ -45,43 +57,9 @@ const Forum: React.FC = () => {
   return (
     <div>
       <div className="posts-wrap">
-        <Post />
-        <div className="post-box">
-          <div className="user-box">
-            <div className="user-box-name">无纸化</div>
-            <div className="user-box-account">2021214115</div>
-          </div>
-        </div>
-        <div className="post-box">
-          <div className="user-box">
-            <div className="user-box-name">无纸化</div>
-            <div className="user-box-account">2021214115</div>
-          </div>
-        </div>
-        <div className="post-box">
-          <div className="user-box">
-            <div className="user-box-name">无纸化</div>
-            <div className="user-box-account">2021214115</div>
-          </div>
-        </div>
-        <div className="post-box">
-          <div className="user-box">
-            <div className="user-box-name">无纸化</div>
-            <div className="user-box-account">2021214115</div>
-          </div>
-        </div>
-        <div className="post-box">
-          <div className="user-box">
-            <div className="user-box-name">无纸化</div>
-            <div className="user-box-account">2021214115</div>
-          </div>
-        </div>
-        <div className="post-box">
-          <div className="user-box">
-            <div className="user-box-name">无纸化</div>
-            <div className="user-box-account">2021214115</div>
-          </div>
-        </div>
+        {posts.map((post) => (
+          <Post key={post.id} post={post} />
+        ))}
       </div>
     </div>
   );
