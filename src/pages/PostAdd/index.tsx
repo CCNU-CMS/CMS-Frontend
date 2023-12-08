@@ -68,6 +68,7 @@ const PostAdd: React.FC = () => {
   const submit = () => {
     if (!content || selectedAcademyTag.id === -1 || selectedCourseTag.id === -1) {
       message.warning('请将内容补充完整！');
+      return;
     }
     let data: API.AddPostParams = {
       content: content,
@@ -96,7 +97,7 @@ const PostAdd: React.FC = () => {
             <Tag
               key={tag.id}
               bordered={false}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: 'pointer', fontSize: '14px' }}
               color={selectedAcademyTag.id === tag.id ? 'blue-inverse' : ''}
               onClick={() => selectAcademyTag(tag)}
             >
@@ -112,7 +113,7 @@ const PostAdd: React.FC = () => {
             <Tag
               key={tag.id}
               bordered={false}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: 'pointer', fontSize: '14px' }}
               color={selectedCourseTag.id === tag.id ? 'green-inverse' : ''}
               onClick={() => selectCourseTag(tag)}
             >
@@ -132,6 +133,14 @@ const PostAdd: React.FC = () => {
       </div>
       <div className="submit-btn-box">
         <Button onClick={submit}>发布</Button>
+      </div>
+      <div
+        className="back"
+        onClick={() => {
+          history.back();
+        }}
+      >
+        返回
       </div>
     </div>
   );

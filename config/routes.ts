@@ -63,6 +63,7 @@ export default [
     component: './AccountSettings',
   },
   { name: '论坛交流', icon: 'CommentOutlined', path: '/forum', component: './Forum' },
+  { path: '/forum/post', component: './PostDetail' },
   { path: '/forum/post/add', component: './PostAdd' },
   { path: '/', redirect: '/welcome' },
   { path: '*', layout: false, component: './404' },

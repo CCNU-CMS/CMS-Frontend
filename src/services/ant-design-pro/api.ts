@@ -155,6 +155,17 @@ export async function getAllPostInfo(page: number, token: string) {
   });
 }
 
+/** 获取单个贴子信息接口 /api/v1/getPost/{postId} */
+export async function getPost(postId: number, token: string) {
+  return request<API.GetPostResult>(`/api/v1/post/getPost/${postId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  });
+}
+
 /** 获取标签信息接口 /api/v1/tag/getTags/{type} */
 export async function getTagInfo(type: number, token: string) {
   return request<API.GetTagInfoResult>(`/api/v1/tag/getTags/${type}`, {
@@ -166,7 +177,7 @@ export async function getTagInfo(type: number, token: string) {
   });
 }
 
-/** 发布贴子接口 */
+/** 发布贴子接口 /api/v1/post/add */
 export async function addPost(body: API.AddPostParams, token: string) {
   return request<API.AddPostResult>('/api/v1/post/add', {
     method: 'POST',
@@ -175,6 +186,29 @@ export async function addPost(body: API.AddPostParams, token: string) {
       Authorization: token,
     },
     data: body,
+  });
+}
+
+/** 发布评论接口 /api/v1/comment/new */
+export async function makeComment(body: API.MakeCommentParams, token: string) {
+  return request<API.MakeCommentResult>('/api/v1/comment/new', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: body,
+  });
+}
+
+/** 删除评论接口 /api/v1/comment/{id} */
+export async function deleteComment(id: number, token: string) {
+  return request<API.DeleteCommentResult>(`/api/v1/comment/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
   });
 }
 

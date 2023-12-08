@@ -194,6 +194,14 @@ declare namespace API {
     timestamp: number;
   };
 
+  /** 获取单个贴子接口返回值类型 */
+  type GetPostResult = {
+    status: number;
+    message: string;
+    data: PostInfo;
+    timestamp: number;
+  };
+
   /** 标签信息类型 */
   type TagInfo = {
     id: number;
@@ -224,6 +232,30 @@ declare namespace API {
     timestamp: number;
   };
 
+  /** 发布评论接口body参数类型 */
+  type MakeCommentParams = {
+    postId: number;
+    account: string;
+    content: string;
+    commentDate: string;
+    parentCommentId: number;
+  };
+
+  /** 发布评论接口返回值类型 */
+  type MakeCommentResult = {
+    status: number;
+    message: string;
+    data: string;
+    timestamp: number;
+  };
+
+  /** 删除评论接口返回值类型 */
+  type DeleteCommentResult = {
+    status: number;
+    message: string;
+    data: string;
+    timestamp: number;
+  };
   // type PageParams = {
   //   current?: number;
   //   pageSize?: number;

@@ -12,10 +12,14 @@ type PostProp = {
 };
 
 const Post: React.FC<PostProp> = (props: PostProp) => {
-  const { user, content, createdAt, tags } = props.post;
+  const { user, content, createdAt, tags, id } = props.post;
+
+  const handleClick = () => {
+    history.push(`/forum/post?id=${id}`);
+  };
 
   return (
-    <div className="post-box">
+    <div className="post-box" onClick={handleClick}>
       <div className="user-box">
         <div className="user-box-name">{user.name}</div>
         <div className="user-box-account">{user.account}</div>
@@ -31,6 +35,9 @@ const Post: React.FC<PostProp> = (props: PostProp) => {
                 key={tag.id}
                 bordered={false}
                 color={tag.type === 1 ? 'blue-inverse' : 'green-inverse'}
+                style={{
+                  fontSize: '14px',
+                }}
               >
                 {tag.name}
               </Tag>
