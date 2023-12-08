@@ -18,7 +18,7 @@ export async function login(body: API.LoginParams, options?: { [key: string]: an
 }
 /** 获取用户个人信息接口 /api/v1/user/info */
 export async function getUserInfo(token: string) {
-  return request<API.GetUserInfoResult>('api/v1/user/info', {
+  return request<API.GetUserInfoResult>('/api/v1/user/info', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -152,6 +152,29 @@ export async function getAllPostInfo(page: number, token: string) {
       'Content-Type': 'application/json',
       Authorization: token,
     },
+  });
+}
+
+/** 获取标签信息接口 /api/v1/tag/getTags/{type} */
+export async function getTagInfo(type: number, token: string) {
+  return request<API.GetTagInfoResult>(`/api/v1/tag/getTags/${type}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  });
+}
+
+/** 发布贴子接口 */
+export async function addPost(body: API.AddPostParams, token: string) {
+  return request<API.AddPostResult>('/api/v1/post/add', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: body,
   });
 }
 

@@ -1,64 +1,73 @@
-.posts-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  align-items: center;
-  width: 100%;
+.forum-wrap {
+  .posts-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    width: 100%;
 
-  .post-box {
-    width: 60%;
-    min-width: 400px;
-    height: 150px;
-    background-color: #fff;
-    border-radius: 8px 8px 8px 8px;
-    box-shadow: 2.6px 2.6px 25.3px rgba(0, 0, 0, 0.029), 5.9px 5.9px 39.8px rgba(0, 0, 0, 0.034);
+    .post-box {
+      width: 60%;
+      min-width: 400px;
+      height: 150px;
+      background-color: #fff;
+      border-radius: 8px 8px 8px 8px;
+      box-shadow: 2.6px 2.6px 25.3px rgba(0, 0, 0, 0.029), 5.9px 5.9px 39.8px rgba(0, 0, 0, 0.034);
 
-    .user-box {
-      display: flex;
-      gap: 6px;
-      align-items: flex-end;
-      margin: 8px 12px 4px 12px;
-      padding: 8px 12px;
+      .user-box {
+        display: flex;
+        gap: 6px;
+        align-items: flex-end;
+        margin: 8px 12px 4px 12px;
+        padding: 8px 12px;
 
-      .user-box-name {
-        color: #121212;
-        font-weight: bold;
-        font-size: 20px;
+        .user-box-name {
+          color: #121212;
+          font-weight: bold;
+          font-size: 20px;
+        }
+
+        .user-box-account {
+          color: #989898;
+        }
       }
 
-      .user-box-account {
-        color: #989898;
+      .content-box {
+        height: 50px;
+        margin: 4px 12px;
+        padding: 4px 12px;
+        border-bottom: 1px solid #dcdcdc;
+
+        .post-content {
+          display: -webkit-box;
+          height: 100%;
+          overflow: hidden;
+          line-height: 20px;
+          text-overflow: ellipsis;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+        }
+      }
+
+      .description-box {
+        // background-color: #989898;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin: 8px 12px 4px 12px;
+        padding: 4px 12px;
+
+        .post-time {
+          color: #989898;
+        }
       }
     }
+  }
 
-    .content-box {
-      height: 50px;
-      margin: 4px 12px;
-      padding: 4px 12px;
-      border-bottom: 1px solid #dcdcdc;
-
-      .post-content {
-        display: -webkit-box;
-        height: 100%;
-        overflow: hidden;
-        line-height: 20px;
-        text-overflow: ellipsis;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-      }
-    }
-
-    .description-box {
-      // background-color: #989898;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      margin: 8px 12px 4px 12px;
-      padding: 4px 12px;
-
-      .post-time {
-        color: #989898;
-      }
-    }
+  .addicon-wrap {
+    position: fixed;
+    right: 120px;
+    bottom: 120px;
+    cursor: pointer;
   }
 }

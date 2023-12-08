@@ -194,6 +194,36 @@ declare namespace API {
     timestamp: number;
   };
 
+  /** 标签信息类型 */
+  type TagInfo = {
+    id: number;
+    name: string;
+    type: number;
+  };
+
+  /** 获取标签接口返回值类型 */
+  type GetTagInfoResult = {
+    status: number;
+    message: string;
+    data: TagInfo[];
+    timestamp: number;
+  };
+
+  /** 发布贴子接口body参数类型 */
+  type AddPostParams = {
+    content: string;
+    account: string;
+    tag_id: number[];
+  };
+
+  /** 发布帖子接口返回值类型 */
+  type AddPostResult = {
+    status: number;
+    message: string;
+    data: string;
+    timestamp: number;
+  };
+
   // type PageParams = {
   //   current?: number;
   //   pageSize?: number;

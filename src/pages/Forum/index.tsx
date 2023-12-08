@@ -1,6 +1,8 @@
 import { getAllPostInfo } from '@/services/ant-design-pro/api';
+import { history } from '@umijs/max';
 import { Divider, Tag } from 'antd';
 import { useEffect, useState } from 'react';
+import addicon from '../../../public/icons/addicon.png';
 import './index.less';
 
 const token = localStorage.getItem('token');
@@ -54,12 +56,19 @@ const Forum: React.FC = () => {
     }
   }, []);
 
+  const toPostAdd = () => {
+    history.push('/forum/post/add');
+  };
+
   return (
-    <div>
+    <div className="forum-wrap">
       <div className="posts-wrap">
         {posts.map((post) => (
           <Post key={post.id} post={post} />
         ))}
+      </div>
+      <div className="addicon-wrap" onClick={toPostAdd}>
+        <img src={addicon} alt="" />
       </div>
     </div>
   );
