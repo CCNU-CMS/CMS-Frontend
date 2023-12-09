@@ -232,6 +232,37 @@ declare namespace API {
     timestamp: number;
   };
 
+  /** 删除贴子接口返回值类型 */
+  type DeletePostResult = {
+    status: number;
+    message: string;
+    data: string;
+    tiemstamp: number;
+  };
+
+  /** 评论信息类型 */
+  type CommentInfo = {
+    id: number;
+    postId: number;
+    userId: number;
+    userName: string;
+    account: string;
+    content: string;
+    commentDate: string;
+    parentCommentId: number;
+    parentUserId: number;
+    parentUserName: string;
+    parentUserAccount: string;
+  };
+
+  /** 获取一个贴子所有评论接口返回值类型 */
+  type GetCommentsResult = {
+    status: number;
+    message: string;
+    data: CommentInfo[];
+    timestamp: number;
+  };
+
   /** 发布评论接口body参数类型 */
   type MakeCommentParams = {
     postId: number;

@@ -49,6 +49,7 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ children }) =
     // const redirect = urlParams.get('redirect');
     // Note: There may be security issues, please note
     if (window.location.pathname !== '/user/login') {
+      localStorage.clear();
       history.replace({
         pathname: '/user/login',
         // search: stringify({

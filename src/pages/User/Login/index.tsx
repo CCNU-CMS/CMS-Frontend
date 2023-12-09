@@ -26,11 +26,15 @@ const LoginMessage: React.FC<{
 const Login: React.FC = () => {
   const { initialState, setInitialState } = useModel('@@initialState');
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({
+    status: 0,
+    message: '',
+    timestamp: 0,
     data: {
       token: '',
       identity: 0,
     },
   });
+
   const containerClassName = useEmotionCss(() => {
     return {
       display: 'flex',
@@ -50,6 +54,7 @@ const Login: React.FC = () => {
         ...values,
       });
       if (msg.status === 100) {
+        // console.log(msg);
         const defaultLoginSuccessMessage = '登录成功！';
         message.success(defaultLoginSuccessMessage);
         localStorage.setItem('token', msg.data.token);
@@ -66,7 +71,7 @@ const Login: React.FC = () => {
         history.push('/');
         return;
       }
-      console.log(msg.status);
+      // console.log(msg.status);
       // 如果失败去设置用户错误信息
       setUserLoginState(msg);
     } catch (error) {

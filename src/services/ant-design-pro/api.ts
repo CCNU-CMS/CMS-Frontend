@@ -189,6 +189,28 @@ export async function addPost(body: API.AddPostParams, token: string) {
   });
 }
 
+/** 删除贴子接口 /api/v1/post/delete/{postId} */
+export async function deletePost(id: number, token: string) {
+  return request<API.DeletePostResult>(`/api/v1/post/delete/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  });
+}
+
+/** 获取单个贴子所有评论接口 /api/v1/comment/post/{postId} */
+export async function getComments(postId: number, token: string) {
+  return request<API.GetCommentsResult>(`/api/v1/comment/post/${postId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  });
+}
+
 /** 发布评论接口 /api/v1/comment/new */
 export async function makeComment(body: API.MakeCommentParams, token: string) {
   return request<API.MakeCommentResult>('/api/v1/comment/new', {
