@@ -95,9 +95,37 @@ export async function deleteUser(body: { account: string }, token: string) {
   });
 }
 
+/** 获取课程中学生信息接口 /api/v1/course/all/choose/people */
+export async function getClassCourseStudents(params: API.GetClassStudentsParams, token: string) {
+  return request<API.GetClassStudentResult>('/api/v1/course/all/choose/people', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    params: {
+      ...params,
+    },
+  });
+}
+
 /** 获取全部课程信息接口 /api/v1/course/all/info */
 export async function getAllCourseInfo(params: { page: number }, token: string) {
   return request<API.GetAllCourseInfoResult>('/api/v1/course/all/info', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    params: {
+      ...params,
+    },
+  });
+}
+
+/** 获取已选择的全部课程信息接口 /api/v1/course/all/info */
+export async function getAllChooseCourseInfo(params: { page: number }, token: string) {
+  return request<API.GetAllChooseCourseInfoResult>('/api/v1/course/all/choose', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

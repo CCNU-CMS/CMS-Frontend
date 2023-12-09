@@ -98,6 +98,24 @@ declare namespace API {
     timestamp: number;
   };
 
+  /** 获取课程中学生信息接口参数类型 */
+  type GetClassStudentsParams = {
+    page: number;
+    course_id: number;
+    identity: number;
+  };
+
+  /** 获取课程中学生信息接口返回值类型 */
+  type GetClassStudentResult = {
+    status: number;
+    message: string;
+    data: {
+      size: number;
+      users: DetailUserInfo[];
+    };
+    timestamp: number;
+  };
+
   /** 课程信息类型 */
   type CourseInfo = {
     id: number;
@@ -111,6 +129,17 @@ declare namespace API {
   };
   /** 获取全部课程信息接口的返回值类型 */
   type GetAllCourseInfoResult = {
+    status: number;
+    message: string;
+    data: {
+      courses: CourseInfo[];
+      size: number;
+    };
+    timestamp: number;
+  };
+
+  /** 获取已选的全部课程信息接口的返回值类型 */
+  type GetAllChooseCourseInfoResult = {
     status: number;
     message: string;
     data: {
