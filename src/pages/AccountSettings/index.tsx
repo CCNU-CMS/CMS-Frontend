@@ -41,10 +41,11 @@ const AccountSettings: React.FC = () => {
       .then((res) => {
         if (res.status === 100) {
           // 更新用户信息成功，可以做一些提示处理
-          console.log('用户信息更新成功');
+          message.success('用户信息更新成功');
+          updateInfo();
         } else {
           // 更新用户信息失败，可以做一些提示处理
-          console.error('用户信息更新失败');
+          message.error('用户信息更新失败');
         }
       })
       .catch((error) => console.error(error));
