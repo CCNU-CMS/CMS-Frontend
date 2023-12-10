@@ -8,7 +8,6 @@ import deleteicon from '../../../public/icons/deleteicon.png';
 import './index.less';
 
 const { confirm } = Modal;
-const token = localStorage.getItem('token');
 
 type UserInfo = {
   id: number;
@@ -26,6 +25,7 @@ type PostProp = {
 };
 
 const Post: React.FC<PostProp> = (props: PostProp) => {
+  const token = localStorage.getItem('token');
   const { post, userInfo, updatePosts } = props;
   const { user, content, createdAt, tags, id } = post;
 
@@ -97,6 +97,7 @@ const Post: React.FC<PostProp> = (props: PostProp) => {
 };
 
 const Forum: React.FC = () => {
+  const token = localStorage.getItem('token');
   const [posts, setPosts] = useState<API.PostInfo[]>([]);
   const [userInfo, setUserInfo] = useState<UserInfo>({
     id: -1,

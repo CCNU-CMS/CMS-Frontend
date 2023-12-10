@@ -3,9 +3,8 @@ import { Button, ConfigProvider, message, Space, Table } from 'antd';
 import Column from 'antd/es/table/Column';
 import React, { useEffect, useState } from 'react';
 
-const token = localStorage.getItem('token');
-
 const TeachCourse: React.FC = () => {
+  const token = localStorage.getItem('token');
   const [allChooseCourseInfo, setAllChooseCourseInfo] = useState<API.CourseInfo[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);

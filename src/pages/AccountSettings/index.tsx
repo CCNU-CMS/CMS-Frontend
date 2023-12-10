@@ -1,28 +1,34 @@
 import { getUserInfo, UpdateUserInfo } from '@/services/ant-design-pro/api';
-import { Button, Form, Input, message, Select, Space } from 'antd';
+import { Button, Input, message, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 import academy from './academy';
+import './index.less';
 // import academy from './academy.ts';
 // const { confirm } = Modal;
 const { Option } = Select;
-const token = localStorage.getItem('token');
 
 const AccountSettings: React.FC = () => {
+  const token = localStorage.getItem('token');
   const [userInfo, setUserInfo] = useState<API.UpdateUserParams>({
     name: '',
     account: '',
     sex: '',
     dept: '',
   });
-  const [form] = Form.useForm();
+  const [formValues, setFormValues] = useState<API.UpdateUserParams>({
+    name: '',
+    account: '',
+    sex: '',
+    dept: '',
+  });
 
   const updateInfo = () => {
     if (token) {
       getUserInfo(token)
         .then((res) => {
           if (res.status === 100) {
-            form.setFieldsValue(res.data);
             setUserInfo(res.data);
+            setFormValues(res.data);
           } else {
             message.error('获取用户信息失败，请重试！');
           }
@@ -32,12 +38,23 @@ const AccountSettings: React.FC = () => {
   };
 
   useEffect(() => {
-    updateInfo();
+    if (token) {
+      getUserInfo(token)
+        .then((res) => {
+          if (res.status === 100) {
+            setUserInfo(res.data);
+            setFormValues(res.data);
+          } else {
+            message.error('获取用户信息失败，请重试！');
+          }
+        })
+        .catch((error) => console.error(error));
+    }
   }, []);
 
-  const onFinish = (values: API.UpdateUserParams) => {
+  const onFinish = () => {
     // 提交表单时触发更新用户信息的请求
-    UpdateUserInfo(values, localStorage.getItem('token') || '')
+    UpdateUserInfo(formValues, localStorage.getItem('token') || '')
       .then((res) => {
         if (res.status === 100) {
           // 更新用户信息成功，可以做一些提示处理
@@ -51,45 +68,78 @@ const AccountSettings: React.FC = () => {
       .catch((error) => console.error(error));
   };
 
+  const changeName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.value;
+    setFormValues({ ...formValues, name });
+  };
+
+  const changeAccount = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const account = e.target.value;
+    setFormValues({ ...formValues, account });
+  };
+
+  const changeSex = (e: string) => {
+    const sex = e;
+    setFormValues({ ...formValues, sex });
+  };
+
+  const changeDept = (e: string) => {
+    const dept = e;
+    setFormValues({ ...formValues, dept });
+  };
+
   const onReset = () => {
-    form.resetFields();
+    setFormValues(userInfo);
   };
 
   return (
-    <Form
-      form={form}
-      name="个人信息"
-      onFinish={onFinish}
-      initialValues={updateInfo}
-      labelCol={{ span: 4 }}
-      wrapperCol={{ span: 14 }}
-    >
-      <Form.Item name="name" label="姓名">
-        <Input placeholder={userInfo.name} />
-      </Form.Item>
-      <Form.Item name="account" label="账号">
-        <Input placeholder={userInfo.account} />
-      </Form.Item>
-      <Form.Item name="sex" label="性别">
-        <Select placeholder={userInfo.sex} allowClear>
-          <Option value="女">女</Option>
-          <Option value="男">男</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item name="dept" label="学院">
-        <Select options={academy}></Select>
-      </Form.Item>
-      <Form.Item wrapperCol={{ offset: 4 }}>
-        <Space style={{ padding: 10 }}>
-          <Button type="primary" htmlType="submit">
+    <>
+      <div className="account-setting-wrap">
+        <div className="form-item">
+          <span className="form-item-lable">姓名</span>
+          <Input
+            className="form-item-field"
+            value={formValues.name}
+            onChange={(e) => changeName(e)}
+          />
+        </div>
+        <div className="form-item">
+          <span className="form-item-lable">账号</span>
+          <Input
+            className="form-item-field"
+            value={formValues.account}
+            onChange={(e) => changeAccount(e)}
+          />
+        </div>
+        <div className="form-item">
+          <span className="form-item-lable">性别</span>
+          <Select
+            className="form-item-field"
+            value={formValues.sex}
+            onChange={(e) => changeSex(e)}
+            allowClear
+          >
+            <Option value="女">女</Option>
+            <Option value="男">男</Option>
+          </Select>
+        </div>
+        <div className="form-item">
+          <span className="form-item-lable">学院</span>
+          <Select
+            className="form-item-field"
+            value={formValues.dept}
+            options={academy}
+            onChange={(e) => changeDept(e)}
+          ></Select>
+        </div>
+        <div className="form-item">
+          <Button type="primary" onClick={onFinish}>
             更新
           </Button>
-          <Button htmlType="button" onClick={onReset}>
-            重置
-          </Button>
-        </Space>
-      </Form.Item>
-    </Form>
+          <Button onClick={onReset}>重置</Button>
+        </div>
+      </div>
+    </>
   );
 };
 

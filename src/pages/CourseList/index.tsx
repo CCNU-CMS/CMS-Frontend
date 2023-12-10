@@ -6,9 +6,8 @@ import React, { useEffect, useState } from 'react';
 
 const { confirm } = Modal;
 
-const token = localStorage.getItem('token');
-
 const CourseList: React.FC = () => {
+  const token = localStorage.getItem('token');
   const [allChooseCourseInfo, setAllChooseCourseInfo] = useState<API.CourseInfo[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);

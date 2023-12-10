@@ -4,7 +4,6 @@ import { Button, Input, message, Tag } from 'antd';
 import { useEffect, useState } from 'react';
 import './index.less';
 const { TextArea } = Input;
-const token = localStorage.getItem('token');
 
 type UserInfo = {
   id: number;
@@ -16,6 +15,7 @@ type UserInfo = {
 };
 
 const PostAdd: React.FC = () => {
+  const token = localStorage.getItem('token');
   const [academyTags, setAcademyTags] = useState<API.TagInfo[]>([]);
   const [courseTags, setCourseTags] = useState<API.TagInfo[]>([]);
   const [selectedAcademyTag, setSelectedAcademyTag] = useState<API.TagInfo>({
