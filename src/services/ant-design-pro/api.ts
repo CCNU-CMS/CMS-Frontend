@@ -16,6 +16,7 @@ export async function login(body: API.LoginParams, options?: { [key: string]: an
     ...(options || {}),
   });
 }
+
 /** 获取用户个人信息接口 /api/v1/user/info */
 export async function getUserInfo(token: string) {
   return request<API.GetUserInfoResult>('/api/v1/user/info', {
@@ -24,6 +25,30 @@ export async function getUserInfo(token: string) {
       'Content-Type': 'application/json',
       Authorization: token,
     },
+  });
+}
+
+/**修改用户个人信息接口 /api/v1/user/info*/
+export async function UpdateUserInfo(body: API.UpdateUserParams, token: string) {
+  return request<API.UpdateUserInfoResult>('/api/v1/user/info', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: body,
+  });
+}
+
+/**修改用户密码接口 /api/v1/user/password*/
+export async function UpdateUserPassword(body: API.UpdateUserPasswordParams, token: string) {
+  return request<API.UpdateUserPasswordResult>('/api/v1/user/password', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: body,
   });
 }
 
@@ -164,6 +189,28 @@ export async function updateCourse(courseId: number, body: API.UpdateCourseParam
 /** 删除课程接口 /api/v1/course/delete/{courseId} */
 export async function deleteCourse(courseId: number, token: string) {
   return request<API.DeleteCourseResult>(`/api/v1/course/delete/${courseId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  });
+}
+
+/** 选课接口 /api/v1//course/choose/{courseId} */
+export async function chooseCourse(courseId: number, token: string) {
+  return request<API.ChooseCourseResult>(`/api/v1//course/choose/${courseId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  });
+}
+
+/** 退课接口 /api/v1/course/delete/{courseId} */
+export async function dropCourse(courseId: number, token: string) {
+  return request<API.DropCourseResult>(`/api/v1/course/drop/${courseId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
