@@ -334,6 +334,7 @@ export async function studentAddCourse(courseId: number, studentAccount: string,
   );
 }
 
+/** 修改密码接口 /api/v1/user/password */
 export async function updatePassword(body: API.UpdatePasswordParams, token: string) {
   return request<API.UpdatePasswordResult>('/api/v1/user/password', {
     method: 'PUT',
@@ -342,6 +343,17 @@ export async function updatePassword(body: API.UpdatePasswordParams, token: stri
       Authorization: token,
     },
     data: body,
+  });
+}
+
+/** 获取用户贴子接口 /api/v1/post/getUserPosts/{userId} */
+export async function getUserPosts(userId: number, token: string) {
+  return request<API.GetUserPostsResult>(`/api/v1/post/getUserPosts/${userId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
   });
 }
 

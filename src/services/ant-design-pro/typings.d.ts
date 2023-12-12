@@ -433,6 +433,14 @@ declare namespace API {
     timestamp: number;
   };
 
+  /** 获取用户发布贴子接口返回值类型 */
+  type GetUserPostsResult = {
+    status: number;
+    message: string;
+    data: PostInfo[];
+    timestamp: number;
+  };
+
   // type PageParams = {
   //   current?: number;
   //   pageSize?: number;

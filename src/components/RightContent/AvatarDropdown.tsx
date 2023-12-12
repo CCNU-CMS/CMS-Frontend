@@ -1,5 +1,5 @@
 import { getUserInfo, updatePassword } from '@/services/ant-design-pro/api';
-import { LogoutOutlined, SettingOutlined } from '@ant-design/icons';
+import { BookOutlined, EditOutlined, LogoutOutlined, SettingOutlined } from '@ant-design/icons';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { history, useModel } from '@umijs/max';
 import { Spin } from 'antd';
@@ -197,13 +197,18 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ children }) =
 
   const menuItems = [
     {
+      key: 'posts',
+      icon: <BookOutlined />,
+      label: '我的贴子',
+    },
+    {
       key: 'settings',
       icon: <SettingOutlined />,
       label: '个人设置',
     },
     {
       key: 'updatePassword',
-      icon: <SettingOutlined />,
+      icon: <EditOutlined />,
       label: '修改密码',
     },
     {
