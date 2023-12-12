@@ -419,6 +419,20 @@ declare namespace API {
     timestamp: number;
   };
 
+  /** 修改密码接口body类型 */
+  type UpdatePasswordParams = {
+    old_password: string;
+    new_password: string;
+  };
+
+  /** 修改密码接口返回值类型 */
+  type UpdatePasswordResult = {
+    status: number;
+    message: string;
+    data: string;
+    timestamp: number;
+  };
+
   // type PageParams = {
   //   current?: number;
   //   pageSize?: number;

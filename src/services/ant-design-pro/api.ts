@@ -333,6 +333,18 @@ export async function studentAddCourse(courseId: number, studentAccount: string,
     },
   );
 }
+
+export async function updatePassword(body: API.UpdatePasswordParams, token: string) {
+  return request<API.UpdatePasswordResult>('/api/v1/user/password', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: body,
+  });
+}
+
 // 以下是框架自带接口，可以忽略
 
 // /** 获取规则列表 GET /api/rule */

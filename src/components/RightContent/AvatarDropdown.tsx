@@ -1,4 +1,4 @@
-import { getUserInfo } from '@/services/ant-design-pro/api';
+import { getUserInfo, updatePassword } from '@/services/ant-design-pro/api';
 import { LogoutOutlined, SettingOutlined } from '@ant-design/icons';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { history, useModel } from '@umijs/max';
@@ -7,6 +7,9 @@ import type { MenuInfo } from 'rc-menu/lib/interface';
 import React, { useCallback, useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
 import HeaderDropdown from '../HeaderDropdown';
+
+import { Flex, Input, message, Modal, Space, Typography } from 'antd';
+const { Text } = Typography;
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
@@ -37,7 +40,89 @@ export const AvatarName = () => {
   return <span className="anticon">{userInfo.name}</span>;
 };
 
+type ModalProps = {
+  isModalOpen: boolean;
+  closeMoal: () => void;
+};
+
+const UpdateModal = (props: ModalProps) => {
+  const token = localStorage.getItem('token');
+  const { isModalOpen, closeMoal } = props;
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const handleOk = () => {
+    if (newPassword === '' || oldPassword === '') {
+      message.warning('请将信息填写完整！');
+      return;
+    }
+
+    let data: API.UpdatePasswordParams = {
+      old_password: oldPassword,
+      new_password: newPassword,
+    };
+
+    if (token) {
+      updatePassword(data, token)
+        .then((res) => {
+          if (res.status === 100) {
+            message.success('修改密码成功！');
+            closeMoal();
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+          message.error('修改密码失败,请重试！');
+        });
+    }
+  };
+
+  const handleCancel = () => {
+    closeMoal();
+  };
+  return (
+    <>
+      <Modal title="修改密码" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <Flex
+          style={{
+            marginLeft: '60px',
+          }}
+          vertical
+          align="start"
+          gap={16}
+        >
+          <Space>
+            <Text>旧密码:</Text>
+            <Input.Password
+              onChange={(e) => {
+                setOldPassword(e.target.value);
+              }}
+              value={oldPassword}
+              style={{ width: 240 }}
+              placeholder="请输入旧密码"
+              allowClear
+            />
+          </Space>
+          <Space>
+            <Text>新密码:</Text>
+            <Input.Password
+              onChange={(e) => {
+                setNewPassword(e.target.value);
+              }}
+              value={newPassword}
+              style={{ width: 240 }}
+              placeholder="请输入新密码"
+              allowClear
+            />
+          </Space>
+        </Flex>
+      </Modal>
+    </>
+  );
+};
+
 export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ children }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   /**
    * 退出登录，并且将当前的 url 保存
    */
@@ -85,6 +170,9 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ children }) =
         loginOut();
         history.push('/user/login');
         return;
+      } else if (key === 'updatePassword') {
+        setIsModalOpen(true);
+        return;
       }
       history.push(`/account/${key}`);
     },
@@ -114,21 +202,33 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ children }) =
       label: '个人设置',
     },
     {
+      key: 'updatePassword',
+      icon: <SettingOutlined />,
+      label: '修改密码',
+    },
+    {
       key: 'logout',
       icon: <LogoutOutlined />,
       label: '退出登录',
     },
   ];
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <HeaderDropdown
-      menu={{
-        selectedKeys: [],
-        onClick: onMenuClick,
-        items: menuItems,
-      }}
-    >
-      {children}
-    </HeaderDropdown>
+    <>
+      <HeaderDropdown
+        menu={{
+          selectedKeys: [],
+          onClick: onMenuClick,
+          items: menuItems,
+        }}
+      >
+        {children}
+      </HeaderDropdown>
+      {isModalOpen && <UpdateModal isModalOpen={isModalOpen} closeMoal={closeModal} />}
+    </>
   );
 };
