@@ -309,6 +309,30 @@ export async function deleteComment(id: number, token: string) {
   });
 }
 
+/** 查询学生信息接口 /api/v1/user/account/{saccount} */
+export async function searchStudentInfo(saccount: string, token: string) {
+  return request<API.SearchStudentInfoResult>(`/api/v1/user/account/${saccount}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+  });
+}
+
+/** 管理员为学生加课接口 /api/v1/course/choose/admin/{courseId}/{studentAccount} */
+export async function studentAddCourse(courseId: number, studentAccount: string, token: string) {
+  return request<API.StudentAddCourseResult>(
+    `/api/v1/course/choose/admin/${courseId}/${studentAccount}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+    },
+  );
+}
 // 以下是框架自带接口，可以忽略
 
 // /** 获取规则列表 GET /api/rule */

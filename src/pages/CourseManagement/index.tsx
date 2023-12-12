@@ -2,17 +2,30 @@ import {
   addCourse,
   deleteCourse,
   getAllCourseInfo,
+  searchStudentInfo,
+  studentAddCourse,
   updateCourse,
 } from '@/services/ant-design-pro/api';
 import { ExclamationCircleFilled } from '@ant-design/icons';
-import { Button, ConfigProvider, Flex, Input, message, Modal, Select, Space, Table } from 'antd';
+import {
+  Button,
+  ConfigProvider,
+  Flex,
+  Input,
+  message,
+  Modal,
+  Select,
+  Space,
+  Table,
+  Typography,
+} from 'antd';
 import Column from 'antd/es/table/Column';
 import { useEffect, useState } from 'react';
 import academyData from './academy';
 
-const { confirm } = Modal;
+const { Text } = Typography;
 
-const token = localStorage.getItem('token');
+const { confirm } = Modal;
 
 type AddModalProps = {
   isModalOpen: boolean;
@@ -21,6 +34,7 @@ type AddModalProps = {
 };
 
 const AddCourseModal = (props: AddModalProps) => {
+  const token = localStorage.getItem('token');
   const { isModalOpen, updateCourses, closeMoal } = props;
 
   const [name, setName] = useState('');
@@ -164,6 +178,7 @@ type UpdateModalProps = {
 };
 
 const UpdateCourseModal = (props: UpdateModalProps) => {
+  const token = localStorage.getItem('token');
   const { course, isModalOpen, updateCourses, closeMoal } = props;
   const [name, setName] = useState(course.name);
   const [time, setTime] = useState(course.time);
@@ -284,7 +299,148 @@ const UpdateCourseModal = (props: UpdateModalProps) => {
   );
 };
 
+type StudentModalProps = {
+  course: API.CourseInfo;
+  isModalOpen: boolean;
+  closeMoal: () => void;
+};
+
+type StudentInfo = {
+  id: number;
+  name: string;
+  account: string;
+  sex: string;
+  dept: string;
+  identity: number;
+  avatar: string;
+};
+
+const StudentModal = (props: StudentModalProps) => {
+  const token = localStorage.getItem('token');
+  const { course, isModalOpen, closeMoal } = props;
+  const [studentAccount, setStudentAccount] = useState('');
+  const [studentInfo, setStudentInfo] = useState<StudentInfo>({
+    id: 0,
+    name: '',
+    account: '',
+    sex: '',
+    dept: '',
+    identity: 0,
+    avatar: '',
+  });
+  const [isExist, setIsExist] = useState(0);
+  const handleOk = () => {
+    if (isExist === -1) {
+      message.error('学号不存在，加课失败！');
+      setIsExist(0);
+      setStudentAccount('');
+      return;
+    }
+
+    if (isExist === 0) {
+      message.warning('请输入学号');
+      return;
+    }
+
+    if (token) {
+      studentAddCourse(course.id, studentAccount, token)
+        .then((res) => {
+          if (res.status === 100) {
+            message.success('加课成功！');
+            closeMoal();
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+          message.error('加课失败！');
+        });
+    }
+  };
+
+  const handleBlur = () => {
+    if (studentAccount === '') {
+      // message.warning('请输入学号');
+      return;
+    }
+
+    if (token) {
+      searchStudentInfo(studentAccount, token)
+        .then((res) => {
+          if (res.status === 100) {
+            setStudentInfo(res.data);
+            setIsExist(1);
+          }
+        })
+        .catch(() => {
+          message.error('学号不存在！');
+          setIsExist(-1);
+        });
+    }
+  };
+
+  const handleCancel = () => {
+    closeMoal();
+  };
+  return (
+    <>
+      <Modal title="加课提示" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <Flex
+          style={{
+            marginLeft: '60px',
+          }}
+          vertical
+          align="start"
+          gap={16}
+        >
+          <Space>
+            <Text strong>课程名称：</Text>
+            <Text>{course.name}</Text>
+          </Space>
+          <Space>
+            <Text strong>任课老师：</Text>
+            <Text>{course.teacher}</Text>
+          </Space>
+          <Space>
+            <span>学生学号:</span>
+            <Input
+              onChange={(e) => {
+                setStudentAccount(e.target.value);
+                setIsExist(0);
+              }}
+              onBlur={handleBlur}
+              value={studentAccount}
+              style={{ width: 240 }}
+              placeholder="请输入学生学号"
+              allowClear
+            />
+          </Space>
+          {isExist === 1 && (
+            <>
+              <Space>
+                <Text strong>学生名称：</Text>
+                <Text>{studentInfo.name}</Text>
+              </Space>
+              <Space>
+                <Text strong>所在学院：</Text>
+                <Text>{studentInfo.dept}</Text>
+              </Space>
+            </>
+          )}
+          {isExist === -1 && (
+            <>
+              <Space>
+                <Text strong>学号不存在！</Text>
+              </Space>
+            </>
+          )}
+        </Flex>
+      </Modal>
+    </>
+  );
+};
+
 const CourseManagement: React.FC = () => {
+  const token = localStorage.getItem('token');
   const [allCourseInfo, setAllCourseInfo] = useState<API.CourseInfo[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -300,6 +456,7 @@ const CourseManagement: React.FC = () => {
   });
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isStudentModalOpen, setIsStudentModalOpen] = useState(false);
 
   const updateCourses = () => {
     if (token) {
@@ -368,6 +525,16 @@ const CourseManagement: React.FC = () => {
     setIsUpdateModalOpen(false);
   };
 
+  const showStudentModal = (record: API.CourseInfo) => {
+    // console.log('as');
+    setSelectedCourse(record);
+    setIsStudentModalOpen(true);
+  };
+
+  const closeStudentModal = () => {
+    setIsStudentModalOpen(false);
+  };
+
   return (
     <>
       <ConfigProvider
@@ -412,6 +579,7 @@ const CourseManagement: React.FC = () => {
               <Space size="middle">
                 <a onClick={() => showUpdateModal(record)}>编辑</a>
                 <a onClick={() => handleDelete(record)}>删除</a>
+                <a onClick={() => showStudentModal(record)}>加课</a>
               </Space>
             )}
           />
@@ -430,6 +598,13 @@ const CourseManagement: React.FC = () => {
           isModalOpen={isUpdateModalOpen}
           updateCourses={updateCourses}
           closeMoal={closeUpdateModal}
+        />
+      )}
+      {isStudentModalOpen && (
+        <StudentModal
+          course={selectedCourse}
+          isModalOpen={isStudentModalOpen}
+          closeMoal={closeStudentModal}
         />
       )}
     </>

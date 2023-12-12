@@ -394,6 +394,31 @@ declare namespace API {
     data: string;
     timestamp: number;
   };
+
+  /** 查询学生信息接口返回值类型 */
+  type SearchStudentInfoResult = {
+    status: number;
+    message: string;
+    data: {
+      id: number;
+      name: string;
+      account: string;
+      sex: string;
+      dept: string;
+      identity: number;
+      avatar: string;
+    };
+    timestamp: number;
+  };
+
+  /** 管理员为学生加课接口返回值类型 */
+  type StudentAddCourseResult = {
+    status: number;
+    message: string;
+    data: string;
+    timestamp: number;
+  };
+
   // type PageParams = {
   //   current?: number;
   //   pageSize?: number;

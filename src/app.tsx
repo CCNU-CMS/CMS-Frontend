@@ -23,10 +23,14 @@ export async function getInitialState(): Promise<{
   const { location } = history;
   if (location.pathname !== loginPath) {
     return {
+      token: localStorage.getItem('token'),
+      identity: localStorage.getItem('identity'),
       settings: defaultSettings as Partial<LayoutSettings>,
     };
   }
   return {
+    token: localStorage.getItem('token'),
+    identity: localStorage.getItem('identity'),
     settings: defaultSettings as Partial<LayoutSettings>,
   };
 }
@@ -45,6 +49,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
+      console.log(initialState);
       if (!initialState?.token && location.pathname !== loginPath) {
         history.push(loginPath);
       }
