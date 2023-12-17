@@ -32,6 +32,7 @@ declare namespace API {
       sex: string;
       dept: string;
       identity: number;
+      avatar: string;
     };
     timestamp: number;
   };
@@ -105,13 +106,29 @@ declare namespace API {
     identity: number;
   };
 
+  type UsersWithGrades = {
+    user: DetailUserInfo;
+    grade: string;
+  };
+
+  type UserGradesInfo = {
+    id: number;
+    name: string;
+    account: string;
+    password: string;
+    sex: string;
+    dept: string;
+    identity: number;
+    grade: string;
+  };
+
   /** 获取课程中学生信息接口返回值类型 */
   type GetClassStudentResult = {
     status: number;
     message: string;
     data: {
       size: number;
-      users: DetailUserInfo[];
+      usersWithGrades: UsersWithGrades[];
     };
     timestamp: number;
   };
@@ -127,6 +144,24 @@ declare namespace API {
     description: string;
     teacher: string;
   };
+
+  type CourseWithGrades = {
+    course: CourseInfo;
+    grade: string;
+  };
+
+  type CourseGradesInfo = {
+    id: number;
+    name: string;
+    time: string;
+    classroom: string;
+    academy: string;
+    dept: string;
+    description: string;
+    teacher: string;
+    grade: string;
+  };
+
   /** 获取全部课程信息接口的返回值类型 */
   type GetAllCourseInfoResult = {
     status: number;
@@ -143,7 +178,7 @@ declare namespace API {
     status: number;
     message: string;
     data: {
-      courses: CourseInfo[];
+      coursesWithGrades: CourseWithGrades[];
       size: number;
     };
     timestamp: number;
@@ -438,6 +473,27 @@ declare namespace API {
     status: number;
     message: string;
     data: PostInfo[];
+    timestamp: number;
+  };
+
+  /** 上传头像接口返回值类型 */
+  type UploadAvatarResult = {
+    status: number;
+    message: string;
+    data: string;
+    timestamp: number;
+  };
+
+  type GiveScoreParams = {
+    courseId: number;
+    saccount: string;
+    grade: number;
+  };
+
+  type GiveScoreResult = {
+    status: number;
+    message: string;
+    data: string;
     timestamp: number;
   };
 

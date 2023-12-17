@@ -357,6 +357,34 @@ export async function getUserPosts(userId: number, token: string) {
   });
 }
 
+/** 上传用户头像接口 /api/v1/user/avatar */
+export async function uploadAvatar(body: { avatar: string }, token: string) {
+  return request<API.UploadAvatarResult>('/api/v1/user/avatar', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: body,
+  });
+}
+
+/** 打分接口 /api/v1/course/mark/{courseId}/{saccount}/{grade} */
+export async function giveScore(params: API.GiveScoreParams, token: string) {
+  return request<API.GiveScoreResult>(
+    `/api/v1/course/mark/${params.courseId}/${params.saccount}/${params.grade}`,
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+    },
+  );
+}
+
+/** 获取七牛云token */
+
 // 以下是框架自带接口，可以忽略
 
 // /** 获取规则列表 GET /api/rule */

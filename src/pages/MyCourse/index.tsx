@@ -9,7 +9,7 @@ const { confirm } = Modal;
 const token = localStorage.getItem('token');
 
 const ChoosedCourse: React.FC = () => {
-  const [allChooseCourseInfo, setAllChooseCourseInfo] = useState<API.CourseInfo[]>([]);
+  const [allChooseCourseInfo, setAllChooseCourseInfo] = useState<API.CourseGradesInfo[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
 
@@ -19,7 +19,14 @@ const ChoosedCourse: React.FC = () => {
         .then((res) => {
           if (res.status === 100) {
             // console.log(res.data.courses.content);
-            setAllChooseCourseInfo(res.data.courses);
+            const newData: API.CourseGradesInfo[] = res.data.coursesWithGrades.map((item) => {
+              return {
+                ...item.course,
+                grade: item.grade || '未打分',
+              };
+            });
+            console.log(newData);
+            setAllChooseCourseInfo(newData);
             setTotal(res.data.size);
           } else {
             message.error('获取课程列表失败，请重试！');
@@ -33,7 +40,7 @@ const ChoosedCourse: React.FC = () => {
     updateCourses();
   }, []);
 
-  const handleDrop = (record: API.CourseInfo) => {
+  const handleDrop = (record: API.CourseGradesInfo) => {
     confirm({
       title: '您确定要退掉该课程吗?',
       icon: <ExclamationCircleFilled />,
@@ -99,10 +106,11 @@ const ChoosedCourse: React.FC = () => {
           <Column title="所属学院" dataIndex="academy" key="academy" width={180} />
           <Column title="所属专业" dataIndex="dept" key="dept" width={180} />
           <Column title="课程描述" dataIndex="description" key="description" width={300} />
+          <Column title="课程分数" dataIndex="grade" key="grade" width={120} />
           <Column
             title="Action"
             key="action"
-            render={(_: any, record: API.CourseInfo) => (
+            render={(_: any, record: API.CourseGradesInfo) => (
               <Space size="middle">
                 <a onClick={() => handleDrop(record)}>退课</a>
               </Space>

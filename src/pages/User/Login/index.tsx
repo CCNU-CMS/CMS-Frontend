@@ -1,5 +1,5 @@
 import Footer from '@/components/Footer';
-import { login } from '@/services/ant-design-pro/api';
+import { getUserInfo, login } from '@/services/ant-design-pro/api';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
@@ -59,15 +59,20 @@ const Login: React.FC = () => {
         message.success(defaultLoginSuccessMessage);
         localStorage.setItem('token', msg.data.token);
         localStorage.setItem('identity', String(msg.data.identity));
-        if (!initialState?.token || !initialState.identity) {
-          flushSync(() => {
-            setInitialState((s) => ({
-              ...s,
-              token: msg.data.token,
-              identity: String(msg.data.identity),
-            }));
-          });
-        }
+        getUserInfo(msg.data.token).then((res) => {
+          localStorage.setItem('avatar', res.data.avatar);
+          if (!initialState?.token || !initialState.identity) {
+            flushSync(() => {
+              setInitialState((s) => ({
+                ...s,
+                token: msg.data.token,
+                identity: String(msg.data.identity),
+                avatar: res.data.avatar,
+              }));
+              // history.push('/');
+            });
+          }
+        });
         history.push('/');
         return;
       }

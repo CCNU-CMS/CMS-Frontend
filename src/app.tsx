@@ -17,18 +17,21 @@ export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
   token?: string | null;
   identity?: string | null;
+  avatar?: string | null;
   loading?: boolean;
 }> {
   // 如果不是登录页面，执行
   const { location } = history;
   if (location.pathname !== loginPath) {
     return {
+      avatar: localStorage.getItem('avatar'),
       token: localStorage.getItem('token'),
       identity: localStorage.getItem('identity'),
       settings: defaultSettings as Partial<LayoutSettings>,
     };
   }
   return {
+    avatar: localStorage.getItem('avatar'),
     token: localStorage.getItem('token'),
     identity: localStorage.getItem('identity'),
     settings: defaultSettings as Partial<LayoutSettings>,
@@ -39,7 +42,7 @@ export async function getInitialState(): Promise<{
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
   return {
     avatarProps: {
-      src: 'http://blog.likeztmy.xyz/user.png',
+      src: initialState?.avatar || 'http://blog.likeztmy.xyz/user.png',
       title: <AvatarName />,
       render: (_, avatarChildren) => {
         return <AvatarDropdown>{avatarChildren}</AvatarDropdown>;
@@ -47,10 +50,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     },
     footerRender: () => <Footer />,
     onPageChange: () => {
-      const { location } = history;
+      // const { location } = history;
       // 如果没有登录，重定向到 login
-      console.log(initialState);
-      if (!initialState?.token && location.pathname !== loginPath) {
+      const token = localStorage.getItem('token');
+      if (!token && location.pathname !== loginPath) {
         history.push(loginPath);
       }
     },
