@@ -166,9 +166,7 @@ const Login: React.FC = () => {
               style={{
                 float: 'right',
               }}
-            >
-              忘记密码 ?
-            </a>
+            ></a>
           </div>
         </LoginForm>
       </div>
