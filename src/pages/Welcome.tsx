@@ -1,13 +1,8 @@
 import { PageContainer } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
 import { Card, theme } from 'antd';
 import React from 'react';
 
-/**
- * 每个单独的卡片，为了复用样式抽成了组件
- * @param param0
- * @returns
- */
+// 创建一个单独的 InfoCard 组件
 const InfoCard: React.FC<{
   title: string;
   index: number;
@@ -15,11 +10,11 @@ const InfoCard: React.FC<{
   href: string;
 }> = ({ title, href, index, desc }) => {
   const { useToken } = theme;
-
   const { token } = useToken();
 
   return (
     <div
+      className="info-card"
       style={{
         backgroundColor: token.colorBgContainer,
         boxShadow: token.boxShadow,
@@ -27,9 +22,13 @@ const InfoCard: React.FC<{
         fontSize: '14px',
         color: token.colorTextSecondary,
         lineHeight: '22px',
-        padding: '16px 19px',
-        minWidth: '220px',
-        flex: 1,
+        padding: '16px',
+        flex: '1 1 auto',
+        margin: '10px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        textAlign: 'left',
       }}
     >
       <div
@@ -85,79 +84,69 @@ const InfoCard: React.FC<{
 
 const Welcome: React.FC = () => {
   const { token } = theme.useToken();
-  const { initialState } = useModel('@@initialState');
 
   return (
     <PageContainer>
-      <Card
-        style={{
-          borderRadius: 8,
-        }}
-        bodyStyle={{
-          backgroundImage:
-            initialState?.settings?.navTheme === 'realDark'
-              ? 'background-image: linear-gradient(75deg, #1A1B1F 0%, #191C1F 100%)'
-              : 'background-image: linear-gradient(75deg, #FBFDFF 0%, #F5F7FF 100%)',
-        }}
-      >
-        <div
-          style={{
-            backgroundPosition: '100% -30%',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '274px auto',
-            backgroundImage:
-              "url('https://gw.alipayobjects.com/mdn/rms_a9745b/afts/img/A*BuFmQqsB2iAAAAAAAAAAAAAAARQnAQ')",
-          }}
-        >
+      <Card className="welcome-card">
+        <div className="welcome-content">
           <div
             style={{
-              fontSize: '20px',
-              color: token.colorTextHeading,
+              flex: 1,
+              backgroundImage:
+                "url('https://gw.alipayobjects.com/mdn/rms_a9745b/afts/img/A*BuFmQqsB2iAAAAAAAAAAAAAAARQnAQ')",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
             }}
           >
-            欢迎使用 Ant Design Pro
+            <div
+              style={{
+                fontSize: '20px',
+                color: token.colorTextHeading,
+                padding: '20px',
+              }}
+            >
+              欢迎使用：学海知舟——课程管理系统
+            </div>
+            <div
+              style={{
+                fontSize: '16px',
+                color: token.colorText,
+                padding: '20px',
+              }}
+            >
+              管理您的课程、论坛和个人信息，轻松统计和报告课程进展。
+            </div>
           </div>
-          <p
-            style={{
-              fontSize: '14px',
-              color: token.colorTextSecondary,
-              lineHeight: '22px',
-              marginTop: 16,
-              marginBottom: 32,
-              width: '65%',
-            }}
-          >
-            Ant Design Pro 是一个整合了 umi，Ant Design 和 ProComponents
-            的脚手架方案。致力于在设计规范和基础组件的基础上，继续向上构建，提炼出典型模板/业务组件/配套设计资源，进一步提升企业级中后台产品设计研发过程中的『用户』和『设计者』的体验。
-          </p>
           <div
             style={{
               display: 'flex',
-              flexWrap: 'wrap',
-              gap: 16,
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '20px',
             }}
           >
             <InfoCard
+              title="课程管理"
               index={1}
-              href="https://umijs.org/docs/introduce/introduce"
-              title="了解 umi"
-              desc="umi 是一个可扩展的企业级前端应用框架,umi 以路由为基础的，同时支持配置式路由和约定式路由，保证路由的功能完备，并以此进行功能扩展。"
+              desc="管理您的课程信息，包括课程计划、时间表和材料。"
+              href="#"
             />
             <InfoCard
+              title="论坛管理"
               index={2}
-              title="了解 ant design"
-              href="https://ant.design"
-              desc="antd 是基于 Ant Design 设计体系的 React UI 组件库，主要用于研发企业级中后台产品。"
+              desc="管理论坛信息，包括帖子、评论和用户。"
+              href="#"
             />
             <InfoCard
+              title="个人管理"
               index={3}
-              title="了解 Pro Components"
-              href="https://procomponents.ant.design"
-              desc="ProComponents 是一个基于 Ant Design 做了更高抽象的模板组件，以 一个组件就是一个页面为开发理念，为中后台开发带来更好的体验。"
+              desc="管理个人信息，包括用户帐户和个人设置。"
+              href="#"
             />
           </div>
         </div>
       </Card>
+      <div className="info-section"></div>
     </PageContainer>
   );
 };
